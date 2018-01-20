@@ -21,8 +21,7 @@ def add(request):
         description = request.POST['description']
         time = request.POST['time']
         location = request.POST['location']
-        patientName = request.POST['patientName']
-
-        appointment = Appointment(title=title, description=description, time=time, location=location, patient_name=patientName)
+        patient_name = request.POST['patient_name']
+        appointment = Appointment(title=title, description=description, time=time, location=location, patient_name=patient_name)
         appointment.save()
         return redirect('/')

@@ -1,7 +1,49 @@
-<p>hello from index</p>
-<ul>
-    Hi
-    {% for appointment in appointments %}
-    <li>{{appointment.title}}</li>
-    {% endfor %}
-</ul>
+{% include 'partials/header.html' %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="card">
+                <h5>My appointments</h5>
+                <a class="btn btn-primary mb-3" href="/appointments/add">Create new appointment</a>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                </div>
+
+                    <div>You do not have any appointments at the moment.</div>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Patient's name</th>
+                            <th>Time</th>
+                            <th>Location</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for appointment in appointments %}
+                        <tr><td>{{appointment.title}}</td>
+                        <td>{{appointment.description}}</td>
+                        <td>{{appointment.patient_name}}</td>
+                        <td>{{appointment.time}}</td>
+                        <td>{{appointment.location}}</td>
+                            <td><a href=""><i class="material-icons">mode_edit</i></a>
+                                <a onclick="event.preventDefault(); document.getElementById('destroy-form').submit();"><i class="material-icons">delete</i></a>
+                            </td>
+                            <form id="destroy-form" action="" method="POST" style="display: none;">
+                                {% csrf_token %}
+                            </form>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'partials/footer.html' %}
