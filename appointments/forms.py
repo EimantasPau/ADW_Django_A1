@@ -12,3 +12,4 @@ class NewAppointmentForm(forms.ModelForm):
         model = Appointment
         fields = ('title', 'description', 'time', 'location', 'patient_name')
 
+

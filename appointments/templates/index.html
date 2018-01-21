@@ -12,8 +12,8 @@
                     </span>
                 </div>
 
-                    <div>You do not have any appointments at the moment.</div>
 
+                   {% if appointments %}
                     <table class="table">
                         <thead>
                         <tr>
@@ -31,7 +31,7 @@
                         <td>{{appointment.patient_name}}</td>
                         <td>{{appointment.time}}</td>
                         <td>{{appointment.location}}</td>
-                            <td><a href=""><i class="material-icons">mode_edit</i></a>
+                            <td><a href="/appointments/edit/{{appointment.id}}"><i class="material-icons">mode_edit</i></a>
                                 <a onclick="event.preventDefault(); document.getElementById('destroy-form').submit();"><i class="material-icons">delete</i></a>
                             </td>
                             <form id="destroy-form" action="/appointments/delete/{{appointment.id}}" method="POST" style="display: none;">
@@ -41,6 +41,9 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {% else %}
+                    <div>You do not have any appointments at the moment.</div>
+                    {% endif %}
 
             </div>
         </div>
