@@ -27,3 +27,8 @@ def add(request):
         appointment = Appointment(title=title, description=description, time=time, location=location, patient_name=patient_name)
         appointment.save()
         return redirect('/')
+
+def delete(request, pk):
+    query = Appointment.objects.get(pk=pk)
+    query.delete()
+    return redirect('/')

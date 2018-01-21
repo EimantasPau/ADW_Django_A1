@@ -34,7 +34,7 @@
                             <td><a href=""><i class="material-icons">mode_edit</i></a>
                                 <a onclick="event.preventDefault(); document.getElementById('destroy-form').submit();"><i class="material-icons">delete</i></a>
                             </td>
-                            <form id="destroy-form" action="" method="POST" style="display: none;">
+                            <form id="destroy-form" action="/appointments/delete/{{appointment.id}}" method="POST" style="display: none;">
                                 {% csrf_token %}
                             </form>
                         </tr>
