@@ -3,11 +3,18 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from .models import Appointment
 from .forms import NewAppointmentForm
+from django.db.models import Q
 # Create your views here.
 
 def index(request):
 
-    appointments = Appointment.objects.all()
+    if(request.GET.get('keyword')):
+        keyword = request.GET.get('keyword')
+        appointments = Appointment.objects.filter(
+            Q(title__contains=keyword) | Q(description__contains=keyword) | Q(patient_name__contains=keyword)
+        )
+    else:
+        appointments = Appointment.objects.all()
     context = {
         'appointments': appointments
     }
@@ -26,12 +33,12 @@ def add(request):
         patient_name = request.POST['patient_name']
         appointment = Appointment(title=title, description=description, time=time, location=location, patient_name=patient_name)
         appointment.save()
-        return redirect('/')
+        return redirect('/appointments')
 
 def delete(request, pk):
     query = Appointment.objects.get(pk=pk)
     query.delete()
-    return redirect('/')
+    return redirect('/appointments')
 
 def edit(request, pk=None):
 
@@ -50,4 +57,4 @@ def edit(request, pk=None):
         appointment.patient_name = request.POST['patient_name']
         # appointment = Appointment(title=title, description=description, time=time, location=location,patient_name=patient_name)
         appointment.save()
-        return redirect('/')
+        return redirect('/appointments')

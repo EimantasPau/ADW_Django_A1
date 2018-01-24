@@ -6,12 +6,14 @@
                 <div class="card-body">
                     <h5>My appointments</h5>
                 <a class="btn btn-primary mb-3" href="/appointments/add">Create new appointment</a>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for...">
-                    <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button">Go!</button>
-                    </span>
-                </div>
+                    <form action="/appointments" method="GET">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search for..." name="keyword">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="submit">Go!</button>
+                            </span>
+                        </div>
+                    </form>
 
 
                    {% if appointments %}
@@ -32,9 +34,8 @@
                         <td>{{appointment.patient_name}}</td>
                         <td>{{appointment.time}}</td>
                         <td>{{appointment.location}}</td>
-                            <td><a href="/appointments/edit/{{appointment.id}}"><i class="material-icons">mode_edit</i></a>
-                                <a onclick="event.preventDefault(); document.getElementById('destroy-form').submit();"><i class="material-icons">delete</i></a>
-                            </td>
+                            <td><a href="/appointments/edit/{{appointment.id}}"><i class="material-icons">mode_edit</i></a></td>
+                            <td> <a href="#" onclick="event.preventDefault(); document.getElementById('destroy-form').submit();"><i class="material-icons">delete</i></a></td>
                             <form id="destroy-form" action="/appointments/delete/{{appointment.id}}" method="POST" style="display: none;">
                                 {% csrf_token %}
                             </form>
@@ -43,7 +44,7 @@
                         </tbody>
                     </table>
                     {% else %}
-                    <div>You do not have any appointments at the moment.</div>
+                    <div>No appointments found.</div>
                     {% endif %}
                 </div>
 
