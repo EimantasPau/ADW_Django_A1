@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from .models import Appointment
 from .forms import NewAppointmentForm
 from django.db.models import Q
+from django.contrib import messages
 # Create your views here.
 
 def index(request):
@@ -33,11 +34,13 @@ def add(request):
         patient_name = request.POST['patient_name']
         appointment = Appointment(title=title, description=description, time=time, location=location, patient_name=patient_name)
         appointment.save()
+        messages.success(request, 'You have successfully created an appointment.')
         return redirect('/appointments')
 
 def delete(request, pk):
     query = Appointment.objects.get(pk=pk)
     query.delete()
+    messages.success(request, 'Appointment deleted.')
     return redirect('/appointments')
 
 def edit(request, pk=None):
@@ -57,4 +60,5 @@ def edit(request, pk=None):
         appointment.patient_name = request.POST['patient_name']
         # appointment = Appointment(title=title, description=description, time=time, location=location,patient_name=patient_name)
         appointment.save()
+        messages.success(request, 'You have successfully updated the appointment.')
         return redirect('/appointments')
