@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'appointments.apps.AppointmentsConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -51,11 +52,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ADW_Django_A1.urls'
-
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(PROJECT_PATH, 'appointments', 'templates'),
+            os.path.join(PROJECT_PATH, 'users', 'templates'),
+            os.path.join(PROJECT_PATH, 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
