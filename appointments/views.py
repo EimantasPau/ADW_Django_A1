@@ -66,7 +66,7 @@ def edit(request, pk=None):
             appointment.save()
             messages.success(request, 'You have successfully updated the appointment.')
             return redirect('/appointments')
-        return render(request, 'create.html', {'form': form})
+        return render(request, 'edit.html', {'form': form})
 
 @login_required
 def show(request, pk):
