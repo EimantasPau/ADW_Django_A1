@@ -37,16 +37,15 @@
                         </thead>
                         <tbody>
                         {% for appointment in appointments %}
-                        <tr><td>{{appointment.title}}</td>
+                        <tr>
+                        <td>{{appointment.title}}</td>
                         <td>{{appointment.description}}</td>
                         <td>{{appointment.patient_name}}</td>
                         <td>{{appointment.time}}</td>
                         <td>{{appointment.location}}</td>
-                            <td><a href="/appointments/edit/{{appointment.id}}"><i class="material-icons">mode_edit</i></a></td>
-                            <td> <a href="#" onclick="event.preventDefault(); document.getElementById('destroy-form').submit();"><i class="material-icons">delete</i></a></td>
-                            <form id="destroy-form" action="/appointments/delete/{{appointment.id}}" method="POST" style="display: none;">
-                                {% csrf_token %}
-                            </form>
+                        <td><a href="/appointments/show/{{ appointment.id }}"><i class="material-icons">description</i></a></td>
+                        <td><a href="/appointments/edit/{{appointment.id}}"><i class="material-icons">mode_edit</i></a></td>
+                        <td> <a href="/appointments/delete/{{ appointment.id }}" ><i class="material-icons">delete</i></a></td>
                         </tr>
                         {% endfor %}
                         </tbody>

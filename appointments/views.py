@@ -67,3 +67,8 @@ def edit(request, pk=None):
             messages.success(request, 'You have successfully updated the appointment.')
             return redirect('/appointments')
         return render(request, 'create.html', {'form': form})
+
+@login_required
+def show(request, pk):
+    appointment = Appointment.objects.get(pk=pk)
+    return render(request, 'show.html', {'appointment': appointment})
