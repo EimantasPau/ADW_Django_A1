@@ -5,8 +5,9 @@ from .models import Appointment
 from .forms import NewAppointmentForm
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+@login_required
 def index(request):
 
     if(request.GET.get('keyword')):
@@ -20,11 +21,10 @@ def index(request):
         'appointments': appointments
     }
     return render(request, 'index.html', context)
-
+@login_required
 def add(request):
     if(request.method == "GET"):
         form = NewAppointmentForm()
-        return render(request,'create.html', {'form': form})
 
     if(request.method == "POST"):
         form = NewAppointmentForm(request.POST or None)
@@ -39,13 +39,13 @@ def add(request):
             messages.success(request, 'You have successfully created an appointment.')
             return redirect('/appointments')
     return render(request, 'create.html', {'form': form})
-
+@login_required
 def delete(request, pk):
     query = Appointment.objects.get(pk=pk)
     query.delete()
     messages.success(request, 'Appointment deleted.')
     return redirect('/appointments')
-
+@login_required
 def edit(request, pk=None):
 
     if(request.method == "GET"):
