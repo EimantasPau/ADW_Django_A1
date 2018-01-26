@@ -27,15 +27,18 @@ def add(request):
         return render(request,'create.html', {'form': form})
 
     if(request.method == "POST"):
-        title = request.POST['title']
-        description = request.POST['description']
-        time = request.POST['time']
-        location = request.POST['location']
-        patient_name = request.POST['patient_name']
-        appointment = Appointment(title=title, description=description, time=time, location=location, patient_name=patient_name)
-        appointment.save()
-        messages.success(request, 'You have successfully created an appointment.')
-        return redirect('/appointments')
+        form = NewAppointmentForm(request.POST or None)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            description = form.cleaned_data.get('description')
+            time = form.cleaned_data.get('time')
+            location = form.cleaned_data.get('location')
+            patient_name = form.cleaned_data.get('patient_name')
+            appointment = Appointment(title=title, description=description, time=time, location=location, patient_name=patient_name)
+            appointment.save()
+            messages.success(request, 'You have successfully created an appointment.')
+            return redirect('/appointments')
+    return render(request, 'create.html', {'form': form})
 
 def delete(request, pk):
     query = Appointment.objects.get(pk=pk)
@@ -51,14 +54,16 @@ def edit(request, pk=None):
         return render(request, 'edit.html', {'form': form})
 
     if(request.method == "POST"):
-
+        form = NewAppointmentForm(request.POST or None)
         appointment = Appointment.objects.get(pk=pk)
-        appointment.title = request.POST['title']
-        appointment.description = request.POST['description']
-        appointment.time = request.POST['time']
-        appointment.location = request.POST['location']
-        appointment.patient_name = request.POST['patient_name']
-        # appointment = Appointment(title=title, description=description, time=time, location=location,patient_name=patient_name)
-        appointment.save()
-        messages.success(request, 'You have successfully updated the appointment.')
-        return redirect('/appointments')
+        if form.is_valid():
+            appointment.title = form.cleaned_data.get('title')
+            appointment.description = form.cleaned_data.get('description')
+            appointment.time = form.cleaned_data.get('time')
+            appointment.location = form.cleaned_data.get('location')
+            appointment.patient_name = form.cleaned_data.get('patient_name')
+            # appointment = Appointment(title=title, description=description, time=time, location=location,patient_name=patient_name)
+            appointment.save()
+            messages.success(request, 'You have successfully updated the appointment.')
+            return redirect('/appointments')
+        return render(request, 'create.html', {'form': form})
